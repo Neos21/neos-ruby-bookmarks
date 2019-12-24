@@ -48,7 +48,7 @@ $cgi = CGI.new
 def main()
   # クレデンシャルが不正な場合
   unless is_valid_credential
-    print_error('<p><strong>Access Denied</strong></p>')
+    print_error('Access Denied')
     return
   end
   
