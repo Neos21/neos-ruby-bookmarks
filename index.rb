@@ -55,7 +55,7 @@ def main()
   # シーケンスファイルとブックマークファイルの存在チェック・なければ空ファイルを作成する
   unless File.exist?(SEQUENCE_FILE_PATH)
     File.open(SEQUENCE_FILE_PATH, 'w:UTF-8') { |sequence_file|
-      sequence_file.puts 0
+      sequence_file.puts('0')
     }
   end
   unless File.exist?(BOOKMARKS_FILE_PATH)
@@ -210,12 +210,12 @@ def add()
     # 書き込み用にデコードする・タブ文字は適宜変換する
     title = CGI.unescape(raw_title).gsub("\t", ' ')
     url   = CGI.unescape(raw_url).gsub("\t", '%09')
-    bookmarks_file.puts "#{next_sequence}\t#{title}\t#{url}"
+    bookmarks_file.puts("#{next_sequence}\t#{title}\t#{url}")
   }
   
   # シーケンス値を更新する
   File.open(SEQUENCE_FILE_PATH, 'w:UTF-8') { |sequence_file|
-    sequence_file.puts next_sequence
+    sequence_file.puts(next_sequence)
   }
   
   # 追加後は一覧にリダイレクトする
