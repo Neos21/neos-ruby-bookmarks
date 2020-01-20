@@ -198,6 +198,30 @@ def add()
     return
   end
   
+  # 書き込み用にデコードする・タブ文字は適宜変換する
+  title = CGI.unescape(raw_title).gsub("\t", ' ')
+  url   = CGI.unescape(raw_url).gsub("\t", '%09')
+  
+  # 重複チェック
+  is_already_added = false
+  File.open(BOOKMARKS_FILE_PATH, 'r:UTF-8') { |bookmarks_file|
+    bookmarks_file.each_line { |line|
+      if line.chomp.empty?
+        next
+      end
+      columns    = line.chomp.split("\t")
+      line_title = columns[1]
+      line_url   = columns[2]
+      if line_title == title || line_url == url
+        is_already_added = true
+      end
+    }
+  }
+  if is_already_added
+    print_error('Add : Already added')
+    return
+  end
+  
   # 現在のシーケンス値を取得し次のシーケンス値を作る
   next_sequence = 0
   File.open(SEQUENCE_FILE_PATH, 'r:UTF-8') { |sequence_file|
@@ -207,9 +231,6 @@ def add()
   
   # ブックマークに追記する
   File.open(BOOKMARKS_FILE_PATH, 'a:UTF-8') { |bookmarks_file|
-    # 書き込み用にデコードする・タブ文字は適宜変換する
-    title = CGI.unescape(raw_title).gsub("\t", ' ')
-    url   = CGI.unescape(raw_url).gsub("\t", '%09')
     bookmarks_file.puts("#{next_sequence}\t#{title}\t#{url}")
   }
   
@@ -279,6 +300,17 @@ content-type: text/html
     <title>#{PAGE_TITLE}</title>
     <style>
 
+@font-face {
+  font-family: "Yu Gothic";
+  src: local("Yu Gothic Medium"), local("YuGothic-Medium");
+}
+
+@font-face {
+  font-family: "Yu Gothic";
+  src: local("Yu Gothic Bold"), local("YuGothic-Bold");
+  font-weight: bold;
+}
+
 *,
 ::before,
 ::after {
@@ -286,7 +318,7 @@ content-type: text/html
 }
 
 html {
-  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, YuGothic, "Yu Gothic", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Hiragino Kaku Gothic Pro", Meiryo, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, YuGothic, "Yu Gothic", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   text-decoration-skip-ink: none;
   -webkit-text-size-adjust: 100%;
   -webkit-text-decoration-skip: objects;
