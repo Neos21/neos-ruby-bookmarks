@@ -438,7 +438,8 @@ end
 
 # リダイレクト用 URL を生成する
 def create_redirect_url()
-  return "http://#{ENV['SERVER_NAME']}/#{File.basename(__FILE__)}?credential=#{$cgi['credential']}"
+  port = ENV['SERVER_PORT'] == '80' ? '' : ":#{ENV['SERVER_PORT']}"
+  return "http://#{ENV['SERVER_NAME']}#{port}/#{File.basename(__FILE__)}?credential=#{$cgi['credential']}"
 end
 
 
