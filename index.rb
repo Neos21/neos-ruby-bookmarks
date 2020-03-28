@@ -94,7 +94,7 @@ def show()
   
   # 登録・削除フォーム
   print(<<"EOL")
-<form action="#{File.basename(__FILE__)}" method="GET" id="add-form">
+<form action="#{ENV['SCRIPT_NAME']}" method="GET" id="add-form">
   <input type="hidden" name="credential" value="#{$cgi['credential']}">
   <input type="hidden" name="mode"       value="add">
   <p>
@@ -103,7 +103,7 @@ def show()
     <input type="button" id="add-btn" value="Add">
   </p>
 </form>
-<form action="#{File.basename(__FILE__)}" method="GET" id="remove-form">
+<form action="#{ENV['SCRIPT_NAME']}" method="GET" id="remove-form">
   <input type="hidden" name="credential" value="#{$cgi['credential']}">
   <input type="hidden" name="mode"       value="remove">
   <input type="hidden" name="targets"    value="" id="remove-targets">
@@ -439,7 +439,7 @@ end
 # リダイレクト用 URL を生成する
 def create_redirect_url()
   port = ENV['SERVER_PORT'] == '80' ? '' : ":#{ENV['SERVER_PORT']}"
-  return "http://#{ENV['SERVER_NAME']}#{port}/#{File.basename(__FILE__)}?credential=#{$cgi['credential']}"
+  return "http://#{ENV['SERVER_NAME']}#{port}#{ENV['SCRIPT_NAME']}?credential=#{$cgi['credential']}"
 end
 
 
