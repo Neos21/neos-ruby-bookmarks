@@ -295,7 +295,6 @@ content-type: text/html
 <html lang="ja">
   <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>#{PAGE_TITLE}</title>
     <style>
@@ -325,9 +324,7 @@ html {
   word-break: break-all;
   line-height: 1.5;
   background: #000;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
+  overflow: hidden scroll;
   cursor: default;
 }
 
