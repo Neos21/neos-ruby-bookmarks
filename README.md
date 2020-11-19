@@ -2,8 +2,6 @@
 
 Ruby 製のオレオレブックマーク。
 
-- __[Example](http://35.197.103.64/bookmarks.rb)__ (管理人しか使えません)
-
 
 ## 機能
 
@@ -62,16 +60,6 @@ javascript:(()=>{window.open('http://example.com/index.rb?credential=MY_CREDENTI
 ```
 
 
-## Author
-
-[Neo](http://neo.s21.xrea.com/)
-
-
 ## Links
 
-- [Neo's World](http://neo.s21.xrea.com/)
-- [Corredor](https://neos21.hatenablog.com/)
-- [Murga](https://neos21.hatenablog.jp/)
-- [El Mylar](https://neos21.hateblo.jp/)
-- [Neo's GitHub Pages](https://neos21.github.io/)
-- [GitHub - Neos21](https://github.com/Neos21/)
+- [Neo's World](https://neos21.net/)
