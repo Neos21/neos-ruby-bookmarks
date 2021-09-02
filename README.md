@@ -56,7 +56,9 @@ URL に `credential` パラメータを指定してアクセスすると、ブ�
 次のようなブックマークレットを用意することで、閲覧中のページを新規ブックマークとして追加できるようになる。
 
 ```javascript
-javascript:(()=>{window.open('http://example.com/index.rb?credential=MY_CREDENTIAL&mode=add&title='+encodeURIComponent(document.title)+'&url='+encodeURIComponent(document.URL));})();
+javascript:(()=>{window.open('http://example.com/index.rb?credential=MY_CREDENTIAL&mode=add&title='+encodeURIComponent(document.title)+'&url='+encodeURIComponent(document.URL))})();
+
+javascript:(()=>{location.href='http://example.com/index.rb?credential=MY_CREDENTIAL&mode=add&title='+encodeURIComponent(document.title)+'&url='+encodeURIComponent(document.URL)})();
 ```
 
 

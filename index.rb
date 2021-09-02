@@ -3,14 +3,8 @@
 # ======================================================================
 # Neo's Ruby Bookmarks
 #
-# Neo (@Neos21) https://neos21.net/
+# Neo https://neos21.net/
 # ======================================================================
-
-
-# Bookmarklet
-# ======================================================================
-
-# javascript:(()=>{window.open('http://【HostName】/index.rb?credential=【Credential】&mode=add&title='+encodeURIComponent(document.title)+'&url='+encodeURIComponent(document.URL));})();
 
 
 # Requires
@@ -32,7 +26,7 @@ SEQUENCE_FILE_PATH = "#{PRIVATE_DIRECTORY_PATH}/bookmarks-sequence.txt"
 # ブックマーク一覧を保存するファイルのパス
 BOOKMARKS_FILE_PATH = "#{PRIVATE_DIRECTORY_PATH}/bookmarks.txt"
 # タイトル
-PAGE_TITLE = "Neo's Ruby Bookmarks";
+PAGE_TITLE = 'Neo\'s Ruby Bookmarks';
 
 
 # グローバル変数
@@ -94,7 +88,7 @@ def show()
   
   # 登録・削除フォーム
   print(<<"EOL")
-<form action="#{ENV['SCRIPT_NAME']}" method="GET" id="add-form">
+<form action="#{File.basename(__FILE__)}" method="GET" id="add-form">
   <input type="hidden" name="credential" value="#{$cgi['credential']}">
   <input type="hidden" name="mode"       value="add">
   <p>
@@ -103,7 +97,7 @@ def show()
     <input type="button" id="add-btn" value="Add">
   </p>
 </form>
-<form action="#{ENV['SCRIPT_NAME']}" method="GET" id="remove-form">
+<form action="#{File.basename(__FILE__)}" method="GET" id="remove-form">
   <input type="hidden" name="credential" value="#{$cgi['credential']}">
   <input type="hidden" name="mode"       value="remove">
   <input type="hidden" name="targets"    value="" id="remove-targets">
@@ -130,7 +124,7 @@ EOL
 <label class="list-item">
   <input type="checkbox" name="sequences" value="#{sequence}">
   <span>#{sequence} : </span>
-  <a href="#{url}" target="_blank">[ #{title} ]</a>
+  <a href="#{url}" rel="noreferrer noopener" target="_blank">[ #{title} ]</a>
 </label>
 EOL
       is_empty = false
@@ -296,7 +290,9 @@ content-type: text/html
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex,nofollow">
     <title>#{PAGE_TITLE}</title>
+    <link rel="icon" href="/favicon.ico">
     <style>
 
 @font-face {
@@ -317,14 +313,13 @@ content-type: text/html
 }
 
 html {
-  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, YuGothic, "Yu Gothic", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  overflow: hidden scroll;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, YuGothic, "Yu Gothic", "Noto Sans JP", "Noto Sans CJK JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Hiragino Kaku Gothic Pro", Meiryo, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   text-decoration-skip-ink: none;
-  -webkit-text-size-adjust: 100%;
   -webkit-text-decoration-skip: objects;
   word-break: break-all;
   line-height: 1.5;
   background: #000;
-  overflow: hidden scroll;
   cursor: default;
 }
 
@@ -407,6 +402,7 @@ input::placeholder {
 .list-item > span {
   margin-left: .5rem;
   margin-right: 1rem;
+  font-family: monospace;
 }
 
     </style>
@@ -435,8 +431,7 @@ end
 
 # リダイレクト用 URL を生成する
 def create_redirect_url()
-  port = ENV['SERVER_PORT'] == '80' ? '' : ":#{ENV['SERVER_PORT']}"
-  return "http://#{ENV['SERVER_NAME']}#{port}#{ENV['SCRIPT_NAME']}?credential=#{$cgi['credential']}"
+  return "http#{$cgi.server_port === 443 ? 's' : '' }://#{ENV['HTTP_HOST']}/#{File.basename(__FILE__)}?credential=#{$cgi['credential']}"
 end
 
 
